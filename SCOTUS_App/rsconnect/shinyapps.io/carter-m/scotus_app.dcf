@@ -1,0 +1,10 @@
+name: scotus_app
+title:
+username:
+account: carter-m
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3381169
+bundleId: 3968323
+url: https://carter-m.shinyapps.io/scotus_app/
+when: 1607562979.9063
