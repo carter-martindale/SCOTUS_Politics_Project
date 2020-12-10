@@ -1,0 +1,30 @@
+These are various notes that I first took when studying
+the codebook. They aren't very neat, and they have all been 
+incorporated into other, more neatly formatted documents by this point.
+
+Notes about the Data:
+-Issue Area breaks down all of the issues into larger areas already. So Criminal Procedure = 1, civil rights = 2, 1st amend = 3, due process = 4, privacy = 5, attorney/government fees and compensation = 6, unions = 7, economic activity = 8, judicial power = 9, federalism = 10, interstate relation = 11, federal taxation = 12, misc = 13, private laws = 14
+-Specification of direction comports with conventional usage for the most part except for the
+interstate relations, private law, and the miscellaneous issues. "Unspecifiable" has been
+entered either because the issue does not lend itself to a liberal or conservative description
+(e.g., a boundary dispute between two states, real property, wills and estates), or because no
+convention exists as to which is the liberal side and which is the conservative side (e.g., the
+legislative veto). This variable will also contain "unspecifiable" where one state sues another
+under the original jurisdiction of the Supreme Court
+-LIberal = 2, Conservative = 1
+
+Jurisdiction:
+1 cert
+2 appeal
+3 bail
+4 certification
+5 docketing fee
+6 rehearing or restored to calendar for reargument
+7 injunction
+8 mandamus
+9 original
+10 prohibition
+12 stay
+13 writ of error
+14 writ of habeas corpus
+15 unspecified, other
