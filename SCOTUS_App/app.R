@@ -60,8 +60,9 @@ ui <- navbarPage(
                                          "1st Amendment", "Due Process",
                                          "Privacy", "Attorney/Government Fees and Compensation",
                                          "Unions", "Economic Activity",
-                                         "Judicial Power", "Federalism", "Interstate Relations",
-                                         "Federal Taxation", "Misc", "Private Laws"
+                                         "Judicial Power", "Federalism",
+                                         "Interstate Relations",
+                                         "Federal Taxation", "Misc"
                              )),
                  plotOutput("plot5")),
              p("Some issues, and even some courts overall have had a fairly
@@ -96,7 +97,12 @@ ui <- navbarPage(
                 )),
                 plotOutput("plot_regress")),
             p("As you can see, some issues are much more 'clear cut' than others
-              when it comes to predicting which way a Justice will lean. I took
+              when it comes to predicting which way a Justice will lean. This 
+              could be because there are less rulings, and thus less data, for 
+              certain issue areas, but it could also be because there are less
+              clear partisan leanings on certain issues (such as Attorney Fees).
+              It could also be a combination of both of these factors. Below,
+              I took
               a closer look at specifically issues on the 1st amendment and came
               up with these results:"),
             fluidPage(theme = shinytheme("cerulean"),
@@ -167,10 +173,18 @@ ui <- navbarPage(
             p("This plot shows the predicted probability for the percentage of 
               cases that will be granted a petition based on their origin
               location. As we saw in the first table, DC is predicted to
-              have the highest percentage of petitions granted."),
+              have the highest percentage of petitions granted. A difference
+              in this plot and the table above 
+              is that it isn't showing simply directionality, but 
+              an actual prediction of the percentage of success"),
             p("The following table is a continuation of the idea in table 1, but
               this time we are looking to see if there is any significant 
-              interaction between the type of case and the origin location."),
+              interaction between the type of case and the origin location.
+              By interaction I mean looking at how, for example,
+              a case being both criminal
+              AND coming from the Second Circuit court might differ from another
+              case that is also criminal, but coming from the Third Circuit 
+              Court"),
             
             fluidPage(theme = shinytheme("cerulean"),
                 fluidRow(
@@ -186,7 +200,7 @@ ui <- navbarPage(
               between the interaction of case origin and case type on the 
               success of a petition."),
             
-            p("Moving forward, I think the lack of more variables really hampers 
+            p("Moving forward, I think the lack of variables really hampers 
               my model. I think that future models could
               try to gather information pertaining to whether or not there was
               media coverage around a certain case, who filed each case, the
@@ -234,7 +248,7 @@ ui <- navbarPage(
                voting record, as a rule of thumb a higher beta value represents
                being more conservative, and a lower value represents being
                more liberal. After analyzing the results I have included
-               the 'top 3' of each direction, while also included RBG for 
+               the 'top 3' of each direction, while also including RBG for 
                reference. "),
              gt_output("model_table_greats"),
              p("As you can see, Justice Thomas appears as the most conservative
@@ -260,7 +274,7 @@ ui <- navbarPage(
              same issues today."),
              p("Check out my repo",
                a("here", 
-                 href = "https://github.com/carter-martindale/SCOTUS_Political_Leanings"),
+                 href = "https://github.com/carter-martindale/SCOTUS_Politics_Project"),
                "to see the rest of my work."),
              h3("Discussion of the Data"),
              p("I drew primarily from three sources of data for my project.
@@ -558,7 +572,7 @@ server <- function(input, output, session) {
                        estimate_fun = function(polarized)
                            style_sigfig(polarized, digits = 3)) %>% 
             as_gt() %>%
-            tab_header(title = "Linear Regression of Justice Vote Direction",
+            tab_header(title = "Logistic Regression of Justice Vote Direction",
                        subtitle = "A selection of the most conversative and liberal justices") %>%
             tab_source_note(md("Source: Supreme Court Database"))
         
