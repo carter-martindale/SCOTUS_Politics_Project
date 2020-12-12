@@ -394,7 +394,7 @@ server <- function(input, output, session) {
             
             labs(title = "Decision Direction by Issue",
                  x = "Issue Area",
-                 y = "Number of Cases")
+                 y = "Percent of Cases")
     })
     
     output$plot_regress <- renderPlot ({
