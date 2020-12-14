@@ -22,8 +22,7 @@ library(broom.mixed)
 
 This is where I did the majority of my actual coding until 
 I moved it into separate R files that I could then source 
-into my shinyapp. So all of this code/the comments are
-repeated in different .R documents. 
+into my shinyapp. For more commented out/explained lines of code see the .R documents inside of the SCOTUS_APP file.
 
 ## SC case centered
 
@@ -117,11 +116,15 @@ d_reformat %>%
   geom_bar(position = "dodge") +
   facet_wrap(~decision_direction)
 
+# All of the following plots were simply methods of data 
+# exploration- I wanted to see how different groups of the
+# data looked when displayed in different ways. 
+
 d_reformat %>% 
   ggplot(aes(x = issue_area, fill = chief)) +
   geom_bar(position = "dodge")
 
- plot3 <- d_reformat %>% 
+ d_reformat %>% 
   filter(decision_direction %in% c(1, 2)) %>% 
   ggplot(aes(x = term, fill = chief)) +
   geom_bar(position = "dodge") +
@@ -135,6 +138,12 @@ d_reformat %>%
   labs(title = "Direction of SCOTUS Rulings",
        x = "Term",
        y = "Number of Rulings")
+ 
+ # This was a sort of final draft for a plot that I would
+ # eventually include in my shiny app. It displays the 
+ # direction of each vote from each Court broken down by 
+ # chief and then faceted by decision direction, so liberal
+ # will be in one pane and Conservative in another pane. 
 
 ```
 
@@ -258,6 +267,10 @@ case_reformat %>%
         ggplot(aes(x = issue_area, fill = chief)) +
             geom_bar(position = "dodge")
 
+# More exploratory analysis to see how the data that falls 
+# under issue area 3 looks like. After looking at it I felt
+# comfortable continuing with making a stan_glm. 
+
 fit <- justice %>% 
             filter(justice_name %in% c("JGRoberts", "CThomas",
                                        "SGBreyer", "SAAlito",
@@ -268,7 +281,7 @@ stan_glm(direction ~ justice_name - 1,
          data = fit,
          refresh = 0)
 
-# Had the idea of maybe looking for a cool distribution
+# I Had the idea of maybe looking for a cool distribution
 # based on jurisdiction, but nothing really came of it
 # so it didn't end up in my final project. 
 
@@ -286,6 +299,11 @@ d$jurisdiction[which(d$jurisdiction == 12)] <- "stay"
 d$jurisdiction[which(d$jurisdiction == 13)] <- "writ of error"
 d$jurisdiction[which(d$jurisdiction == 14)] <- "writ of habeus corpus"
 d$jurisdiction[which(d$jurisdiction == 15)] <- "unspecified"
+
+# Changed the variable name to something meaningful rather 
+# than just a number that users/I would have to look up to 
+# ascertain what exact jurisdiction the number meant. 
+
 
 ```
 ## Reading in petition data
@@ -509,38 +527,10 @@ tbl_regression(roberts_model_2, intercept = TRUE,
                subtitle = "The Effect of case type and origin interaction on petition success") %>%
     tab_source_note(md("Source: Circuit Court Data"))
 
-```
+# This is the table output that I wanted to display, and so
+# I used the include argument to only take a portion of the
+# overall table/results of my regression. 
 
-```{r plots for circuit court data}
-
-fit <- stan_glm(percent_granted ~ district,
-         data = roberts_circuit,
-         refresh = 0)
-new_obs <- tibble(district = c("1st", "2nd", "3rd", "4th", "5th",
-                               "6th", "7th", "8th", "9th", "10th",
-                               "11th", "DC"))
-
-ep <- posterior_epred(fit,
-                  newdata = new_obs) %>% 
-  as_tibble() %>% 
-  mutate_all(as.numeric) %>% 
-  rename(DC = `12`) %>% 
-  pivot_longer(cols = 1:DC,
-               names_to = "Circuit",
-               values_to = "Prediction")
-
-ep %>%
-  ggplot(aes(Prediction)) +
-   geom_histogram(aes(y = after_stat(count/sum(count))),
-                   bins = 100, 
-                   position = "identity",
-                   color = "grey") +
-     facet_wrap(~Circuit) +
-  labs(x = "Percentage of Successful Petitions",
-       y = "Probability",
-       title = "Percentage of Successful Petitions by Circuit Origin",
-       subtitle = "DC seems to be the most reliable circuit for a successful petition") +
-  theme_classic()
 ```
 
 ```{r justice model plots}

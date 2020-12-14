@@ -191,6 +191,10 @@ ui <- navbarPage(
                 column(5, gt_output("model_table3"), offset = 1),
                 column(5, gt_output("model_table4"), offset = 1))),
             
+            # This was another way to ensure that the tables were output
+            # in the way that I wanted/thought looked good, rather than just 
+            # being one on top of the other. 
+            
             p("Looking at the table, you will notice the massive range of the
             confidence interval, and that none of them disprove the null 
             hypothesis. For these reasons, I don't think the interaction term
@@ -456,6 +460,11 @@ server <- function(input, output, session) {
             
             labs(title = "Posterior Probability Distribution",
                  subtitle = (paste("Predicted Vote Direction on",input$I)),
+                 
+                 # It took me a while to figure out how to make part of the
+                 # subtitle reactive, but eventually I found this line of code
+                 # on the internet and the syntax worked for what I wanted. 
+                 
                  x = "Vote Direction",
                  y = "Probability",
                  caption = "Data falling between 0 and 0.5 indicate a predicted
@@ -483,7 +492,8 @@ server <- function(input, output, session) {
                        subtitle = "Looking at 1st Amendment Cases") %>%
             tab_source_note(md("Source: The Supreme Court Database"))
         
-        # What I did for this table can be explained in my model_1 R doc
+        # What I did for this table and for all of the following tables
+        # can be explained in my model_1 R doc
     })
     
     output$model_table2 <- render_gt({
